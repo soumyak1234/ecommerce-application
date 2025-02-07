@@ -1,16 +1,22 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { ChevronRightIcon } from '@heroicons/react/24/outline';
 import ProductCard from '../components/product/ProductCard';
 import productsData from '../data/products.json';
 
 function Home() {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setProducts(productsData.products);
     setCategories(productsData.categories);
   }, []);
+
+  const handleCategoryClick = (categoryName) => {
+    navigate(`/products?category=${encodeURIComponent(categoryName)}`);
+  };
 
   return (
     <div className="min-h-screen">
@@ -64,26 +70,37 @@ function Home() {
       <section className="bg-gray-50 py-16">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold mb-8">Shop by Category</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {categories.map(category => (
-              <Link
+              <div
                 key={category.id}
-                to={`/category/${category.id}`}
-                className="group relative overflow-hidden rounded-lg shadow-lg aspect-w-16 aspect-h-9"
+                onClick={() => handleCategoryClick(category.name)}
+                className="cursor-pointer group relative overflow-hidden rounded-lg shadow-lg"
               >
-                <img
-                  src={category.image}
-                  alt={category.name}
-                  className="w-full h-full object-cover transform transition-transform duration-300 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-                  <div className="text-center text-white">
-                    <h3 className="text-2xl font-bold mb-2">{category.name}</h3>
-                    <p>{category.itemCount} Items</p>
+                <div className="aspect-w-16 aspect-h-9">
+                  <img
+                    src={category.image}
+                    alt={category.name}
+                    className="w-full h-48 object-cover transform transition-transform duration-300 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-black/40 flex items-center justify-center transition-opacity duration-300 group-hover:bg-black/50">
+                    <div className="text-center text-white">
+                      <h3 className="text-xl font-bold mb-2">{category.name}</h3>
+                      <p className="text-sm">{category.itemCount} Items</p>
+                    </div>
                   </div>
                 </div>
-              </Link>
+              </div>
             ))}
+          </div>
+          <div className="text-center mt-8">
+            <Link
+              to="/categories"
+              className="inline-flex items-center text-blue-600 hover:text-blue-700 font-medium"
+            >
+              View All Categories
+              <ChevronRightIcon className="h-5 w-5 ml-1" />
+            </Link>
           </div>
         </div>
       </section>

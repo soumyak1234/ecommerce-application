@@ -46,6 +46,7 @@ function App() {
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/products" element={<Products />} />
+                <Route path="/categories" element={<Categories />} />
                 <Route path="/products/:id" element={<ProductDetail />} />
                 <Route path="/cart" element={<Cart />} />
                 <Route path="/wishlist" element={<Wishlist />} />
@@ -53,10 +54,9 @@ function App() {
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
-                <Route path="/categories" element={<Categories />} />
-                <Route path="/clearance" element={<Clearance />} />
                 <Route path="/new-arrivals" element={<NewArrivals />} />
                 <Route path="/deals" element={<Deals />} />
+                <Route path="/clearance" element={<Clearance />} />
                 <Route
                   path="/profile"
                   element={
@@ -65,7 +65,7 @@ function App() {
                     </ProtectedRoute>
                   }
                 />
-                {/* Catch all route for 404 */}
+                {/* Add a catch-all route for 404 */}
                 <Route path="*" element={
                   <div className="min-h-screen flex items-center justify-center">
                     <div className="text-center">
